@@ -1,0 +1,84 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+void wait(int wait_time);
+int main() {
+	srand(time(0));
+	int isWin = 1;
+	char exit = ' ';
+	int levelCounter = 1;
+	int reachedLevel = 0;
+	int arrSizeCounter = 1;
+	int* gameNum;
+	int* userArr;
+	gameNum = new int[arrSizeCounter];
+	userArr = new int[arrSizeCounter];
+
+	do {
+		cout << "<<< Memory Game >>>" << endl;
+		cout << "<<< Every Round You Must Remember +One Number >>>" << endl;
+		cout << "<<< Current Level: " << levelCounter << " | " << "Reached Level: " << reachedLevel << " >>>" << endl;
+		cout << "<<< Start Checking >>>" << endl << endl;
+		cout << "Numbers Are:" << endl;
+		for (int i = 0; i < arrSizeCounter; i++) {
+			gameNum[i] = rand() % 44 + 6;
+			cout << gameNum[i] << " ";
+		}
+		cout << endl;
+		wait(3);
+		system("cls");
+		cout << "<<< Memory Game >>>" << endl;
+		cout << "<<< Every Round You Must Remember +One Number >>>" << endl;
+		cout << "<<< Current Level: " << levelCounter << " | " << "Reached Level: " << reachedLevel << " >>>" << endl;
+		cout << "<<< Start Checking >>>" << endl << endl;
+		cout << "Input Remembered Numbers: " << endl;
+		for (int i = 0; i < arrSizeCounter; i++) {	cin >> userArr[i];	}
+		cout << endl;
+		system("cls");
+		for (int i = 0; i < arrSizeCounter; ++i) {
+			if (gameNum[i] == userArr[i]) {
+				isWin = 1;
+			}
+			else isWin = 0;
+		}
+		if (isWin == 1) {
+			arrSizeCounter++;
+			levelCounter++;
+		}
+		if (isWin == 0) {
+			cout << "You Get Wrong Number" << endl;
+			cout << "Correct Numbers Are:" << endl;
+			for (int i = 0; i < arrSizeCounter; i++) {	cout << gameNum[i] << " ";	}
+			cout << endl;
+			cout << "Your Numbers Are:" << endl;
+			for (int i = 0; i < arrSizeCounter; i++) { cout << userArr[i] << " "; }
+			cout << endl;
+			cout << "Do You Wannta Try Again Y/N ??" << endl;
+			cin >> exit;
+			if (exit == 'N' || exit == 'n') {
+				isWin = 0;
+			}
+			if (exit == 'Y' || exit == 'y') {
+				isWin = 1;
+				reachedLevel = levelCounter;
+				arrSizeCounter = 1;
+				levelCounter = 1;				
+			}
+		}
+	} while (isWin == 1);
+
+	return 0;
+}
+
+void wait(int wait_time) {
+	long* start_time = new long;
+	*start_time = time(0);
+	while ((*start_time + wait_time) > time(0)) {
+	};
+	delete start_time;
+};
