@@ -1,0 +1,139 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+
+void wait(int wait_time);
+int main()
+{
+	srand(time(0));
+	long long int randomNumbers = 0;
+	int userInput = 0;
+	int levels = 0;
+	int counter = 2;
+	int memNum = 0;
+	int exit = 1;
+	int xp = 0;
+	int randDigit = 0;
+
+	do {
+		levels++;
+
+		for (int i = 0; i < 2; i++) {
+			cout << "<< Immediate MemorY >>" << endl << endl;
+			if (levels == 1) { randDigit = rand() % 88 + 11; }
+			else if (levels == 2) { randDigit = rand() % 876 + 123; }
+			else if (levels == 3) { randDigit = rand() % 8765 + 1234; }
+			else if (levels == 4) { randDigit = rand() % 87654 + 12345; }
+			else if (levels == 5) { randDigit = rand() % 876543 + 123456; }
+			else if (levels == 6) { randDigit = rand() % 8765432 + 1234567; }
+			else if (levels == 7) { randDigit = rand() % 87654321 + 12345678; }
+			else if (levels == 8) { randDigit = rand() % 987654321 + 123456789; }
+			else if (levels == 9) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 10) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 11) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 12) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 13) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 14) { randDigit = rand() % 9876543210 + 1234567890; }
+			else if (levels == 15) { randDigit = rand() % 9876543210 + 1234567890; }
+
+			cout << "|>>> " << randDigit << " <<<|" << endl;
+			wait(3);
+			system("cls"); // end first screen layer
+			cout << "<< Immediate MeMory >>" << endl << endl; // second screen layer
+			cout << "|>VALIDATE<|" << endl;
+			cin >> userInput;
+			system("cls");
+			if (userInput != randDigit) {
+				//exit = 2;
+				cout << "|<< Immediate Memory >>|" << endl << endl;
+				cout << "|<<<<<< GameOver >>>>>>|" << endl;
+				cout << "Correct Number " << "[" << randDigit << "]" << endl;
+				cout << "Memorized numbers: " << memNum << endl;
+				cout << "Score " << xp << endl;
+				cout << "New Game [1/0]? " << endl;
+				cin >> exit;
+				system("cls");
+				levels = 0;
+				memNum = 0;
+				xp = 0;
+				break;
+			}
+			else {
+				xp += 10;
+				memNum++;
+			}
+		}
+
+	} while (exit == 1);
+
+	return 0;
+}
+
+void wait(int wait_time) {
+	long* start_time = new long;
+	*start_time = time(0);
+	while ((*start_time + wait_time) > time(0)) {
+	};
+	delete start_time;
+};
+
+
+
+/*
+
+		case 4:
+			for (int i = 0; i < 2; i++) {
+				randomNumbers = rand() % 99999 + 12345;
+				cout << "[" << randomNumbers << "]" << endl << endl;
+				wait(4);
+				system("cls");
+				cout << "<< ImmediatE Memory >>" << endl << endl;
+				cout << "VALIDATE" << endl;
+				cin >> userInput;
+				system("cls");
+				cout << "<< ImmediatE Memory >>" << endl << endl;
+				cout << "VALIDATE" << endl;
+			}
+			break;
+		case 5:
+			for (int i = 0; i < 2; i++) {
+				randomNumbers = rand() % 999999 + 123456;
+				cout << "[" << randomNumbers << "]" << endl << endl;
+				cout << "VALIDATE" << endl;
+				cin >> userInput;
+			}
+			break;
+		case 6:
+			for (int i = 0; i < 2; i++) {
+				randomNumbers = rand() % 9999999 + 1234567;
+				cout << "[" << randomNumbers << "]" << endl << endl;
+				cout << "VALIDATE" << endl;
+				cin >> userInput;
+			}
+			break;
+		case 7:
+			for (int i = 0; i < 2; i++) {
+				randomNumbers = rand() % 99999999 + 12345678;
+				cout << "[" << randomNumbers << "]" << endl << endl;
+				cout << "VALIDATE" << endl;
+				cin >> userInput;
+			}
+			break;
+		case 8:
+			for (int i = 0; i < 2; i++) {
+				randomNumbers = rand() % 999999999 + 123456789;
+				cout << "[" << randomNumbers << "]" << endl << endl;
+				cout << "VALIDATE" << endl;
+				cin >> userInput;
+			}
+			break;
+		default:
+			cout << "error.." << endl;
+			break;
+
+*/
