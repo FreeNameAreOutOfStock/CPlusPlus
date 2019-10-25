@@ -1,0 +1,71 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+
+using namespace std;
+
+int main() {
+
+	int quit = 0;
+	int array[9] = { 32,32,32,32,32,32,32,32,32 };
+	int currentPlayer = 1;
+	int arrPosition;
+	int arrValue;
+	char mark;
+	int moveCount = 0;
+	do {
+		cout << "Tic-Tac-Toe" << endl << endl;
+		if (currentPlayer == 0) {
+			cout << "Current Player: O" << endl << endl;
+			currentPlayer++;
+		}
+		else {
+			cout << "Current Player: X" << endl << endl;
+			currentPlayer--;
+		}
+		cout << " " << (char)array[0] << " | " << (char)array[1] << " | " << (char)array[2] << endl;
+		cout << "-----------" << endl;
+		cout << " " << (char)array[3] << " | " << (char)array[4] << " | " << (char)array[5] << endl;
+		cout << "-----------" << endl;
+		cout << " " << (char)array[6] << " | " << (char)array[7] << " | " << (char)array[8] << endl;
+		cout << endl;
+		if (array[0] + array[1] + array[2] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[3] + array[4] + array[5] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[6] + array[7] + array[8] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[0] + array[4] + array[8] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[2] + array[4] + array[6] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[0] + array[3] + array[6] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[1] + array[4] + array[7] == 264) { cout << "Winner is Player X" << endl; break; }
+		if (array[2] + array[5] + array[8] == 264) { cout << "Winner is Player X" << endl; break; }
+		////////////////////// Player X
+		if (array[0] + array[1] + array[2] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[3] + array[4] + array[5] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[6] + array[7] + array[8] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[0] + array[4] + array[8] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[2] + array[4] + array[6] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[0] + array[3] + array[6] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[1] + array[4] + array[7] == 237) { cout << "Winner is Player O" << endl; break; }
+		if (array[2] + array[5] + array[8] == 237) { cout << "Winner is Player O" << endl; break; }
+		////////////////////// Player O
+		moveCount++;
+		if (moveCount >= 10) {	cout << "Tie !!!, No One Wins" << endl;	break;	}
+		cout << "Choose Box [0-8]:" << endl;
+		cin >> arrPosition;
+		while (array[arrPosition] != 32) {
+			cout << "Box Isn't Free, Choose Another Position: " << endl;
+			cin >> arrPosition;
+		}
+		cout << "Put Your Mark" << endl;
+		cin >> mark;
+		if (mark == 'x' || mark == 'X') { arrValue = 88; }
+		if (mark == 'o' || mark == 'O') { arrValue = 79; }
+		system("cls");
+		for (int size = 0; size < 9; size++) {
+			array[arrPosition] = arrValue;
+		}
+	} while (quit == 0);
+
+	return 0;
+}
+
