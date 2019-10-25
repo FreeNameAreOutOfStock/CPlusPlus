@@ -1,0 +1,843 @@
+#include <iostream>
+#include <string> 
+#include <cstdlib> 
+#include <iomanip>
+
+using namespace std;
+
+struct farmacy
+{
+	string ime;
+	string proizvoditel;
+	string recepta;
+	int dostaveni;
+	int nalichnost;
+	double cena;
+};
+
+void addmed(farmacy lekarstva[], int size);
+void nalichnost(farmacy lekarstva[], int size);
+void cena(farmacy lekarstva[], int size);
+void recepta(farmacy lekarstva[], int size);
+void prodajbi(farmacy lekarstva[], int size);
+void Gmenu(farmacy lekarstva[], int size);
+
+int main()
+{
+	const int size = 10;
+
+	farmacy lekarstva[size];
+
+	addmed(lekarstva, size);
+
+	system("cls");
+
+	Gmenu(lekarstva, size);	
+	
+	return 0;
+}
+
+void addmed(farmacy lekarstva[], int size)
+{
+	for (int i = 0; i < size; i++)
+	{
+		cout << "Vuvedi ime na lekarstvo:";
+		getline(cin, lekarstva[i].ime);
+
+		cout << "vuvedi proizvoditel:";
+		getline(cin, lekarstva[i].proizvoditel);
+
+		cout << "izisikva li se recepta [y]or[n] " << endl;
+		getline(cin, lekarstva[i].recepta);
+
+		cout << "dostaveni:";
+		cin >> lekarstva[i].dostaveni;
+
+		cout << "nalichnost:";
+		cin >> lekarstva[i].nalichnost;
+
+		cout << "cena:";
+		cin >> lekarstva[i].cena;
+		cin.ignore();
+	}
+}
+
+void nalichnost(farmacy lekarstva[], int size)
+{
+	int x;
+	cout << "Nenalichni lekarstva:" << endl;
+	for (int i = 0; i < 10; i++)
+	{
+		if (lekarstva[i].nalichnost == 0)
+		{
+			cout << lekarstva[i].ime << endl;
+		}
+	}
+	cout << "[0] Nazad" << endl;
+	cin >> x;
+	if(x==0)
+		return Gmenu(lekarstva, size);
+}
+
+void cena(farmacy lekarstva[], int size)
+{
+	double swap;	
+	int x;
+
+	for (int i = 0; i <= 10; i++)
+	{
+		for (int j = 0; j <= 10 - i; j++)
+		{
+			if (lekarstva[j].cena > lekarstva[j + 1].cena)
+			{
+				swap = lekarstva[j].cena;
+				lekarstva[j].cena = lekarstva[j + 1].cena;
+				lekarstva[j + 1].cena = swap;
+			}
+		}
+	}
+			cout << "Nai skupoto lekarstvo e: " << endl;
+			for (int j = 9; j >= 0; j--)
+			{
+				cout << lekarstva[j].ime << endl;
+			}
+			cout << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 0)
+				return Gmenu(lekarstva, size);
+}
+
+void recepta(farmacy lekarstva[], int size)
+{
+	int x;
+
+	cout << "Lekarstvata s recepta sa: " << endl;
+	for (int i = 0; i < 10; i++)
+	{
+		if (lekarstva[i].recepta == "y")
+		{			
+			cout << lekarstva[i].ime << endl;
+		}
+	}
+	cout << "[0] Nazad" << endl;
+	cin >> x;
+	if (x == 0)
+		return Gmenu(lekarstva, size);
+}
+
+void prodajbi(farmacy lekarstva[], int size)
+{
+		int menu;
+		
+		cout << "Izberi lekarstvo:" << endl;
+		cout << "[1]" << lekarstva[0].ime << endl;
+		cout << "[2]" << lekarstva[1].ime << endl;
+		cout << "[3]" << lekarstva[2].ime << endl;
+		cout << "[4]" << lekarstva[3].ime << endl;
+		cout << "[5]" << lekarstva[4].ime << endl;
+		cout << "[6]" << lekarstva[5].ime << endl;
+		cout << "[7]" << lekarstva[6].ime << endl;
+		cout << "[8]" << lekarstva[7].ime << endl;
+		cout << "[9]" << lekarstva[8].ime << endl;
+		cout << "[10]" << lekarstva[9].ime << endl;
+		cout << "[0] Nazad" << endl;		
+
+		cin >> menu;
+		
+		if (menu == 1)
+		{
+			cout << "Ime :" << lekarstva[0].ime << endl
+				<< "Proizvoditel: " << lekarstva[0].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[0].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[0].nalichnost << endl
+				<< "Cena: " << lekarstva[0].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[0].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;			
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[0].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[0].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[0].cena);
+
+				if (lekarstva[0].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[0].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);			
+		}
+		if (menu == 2)
+		{
+			cout << "Ime :" << lekarstva[1].ime << endl
+				<< "Proizvoditel: " << lekarstva[1].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[1].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[1].nalichnost << endl
+				<< "Cena: " << lekarstva[1].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[1].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[1].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[1].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[1].cena);
+
+				if (lekarstva[1].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[1].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 3)
+		{
+			cout << "Ime :" << lekarstva[2].ime << endl
+				<< "Proizvoditel: " << lekarstva[2].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[2].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[2].nalichnost << endl
+				<< "Cena: " << lekarstva[2].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[2].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[2].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[2].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[2].cena);
+
+				if (lekarstva[2].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[2].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 4)
+		{
+			cout << "Ime :" << lekarstva[3].ime << endl
+				<< "Proizvoditel: " << lekarstva[3].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[3].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[3].nalichnost << endl
+				<< "Cena: " << lekarstva[3].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[3].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[3].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[3].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[3].cena);
+
+				if (lekarstva[3].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[3].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 5)
+		{
+			cout << "Ime :" << lekarstva[4].ime << endl
+				<< "Proizvoditel: " << lekarstva[4].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[4].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[4].nalichnost << endl
+				<< "Cena: " << lekarstva[4].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[4].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[4].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[4].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[4].cena);
+
+				if (lekarstva[4].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[4].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 6)
+		{
+			cout << "Ime :" << lekarstva[5].ime << endl
+				<< "Proizvoditel: " << lekarstva[5].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[5].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[5].nalichnost << endl
+				<< "Cena: " << lekarstva[5].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[5].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[5].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[5].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[5].cena);
+
+				if (lekarstva[5].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[5].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}		
+		if (menu == 7)
+		{
+			cout << "Ime :" << lekarstva[6].ime << endl
+				<< "Proizvoditel: " << lekarstva[6].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[6].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[6].nalichnost << endl
+				<< "Cena: " << lekarstva[6].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[6].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[6].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[6].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[6].cena);
+
+				if (lekarstva[6].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[6].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 8)
+		{
+			cout << "Ime :" << lekarstva[7].ime << endl
+				<< "Proizvoditel: " << lekarstva[7].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[7].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[7].nalichnost << endl
+				<< "Cena: " << lekarstva[7].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[7].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[7].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[7].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[0].cena);
+
+				if (lekarstva[7].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[7].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 9)
+		{
+			cout << "Ime :" << lekarstva[8].ime << endl
+				<< "Proizvoditel: " << lekarstva[8].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[8].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[8].nalichnost << endl
+				<< "Cena: " << lekarstva[8].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[8].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[8].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[8].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[8].cena);
+
+				if (lekarstva[8].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[8].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 10)
+		{
+
+			cout << "Ime :" << lekarstva[9].ime << endl
+				<< "Proizvoditel: " << lekarstva[9].proizvoditel << endl
+				<< "Dostaveni: " << lekarstva[9].dostaveni << endl
+				<< "Nalichnost: " << lekarstva[9].nalichnost << endl
+				<< "Cena: " << lekarstva[9].cena << endl
+				<< "Iziskva li se recepta: " << lekarstva[9].recepta << endl;
+
+			int x;
+			double price;
+			int receipt;
+			int code;
+
+			cout << "[1] Kupi\t" << "[0] Nazad" << endl;
+			cin >> x;
+			if (x == 1)
+			{
+				if (lekarstva[9].nalichnost == 0)
+				{
+					cout << "Lekarstvoto ne e nalichno" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				do
+				{
+					cout << "Vuvedi suma: " << endl;
+					cin >> price;
+					if (price < lekarstva[9].cena)
+					{
+						cout << "Nedostatuchna suma za pokupka" << endl;
+					}
+
+				} while (price < lekarstva[9].cena);
+
+				if (lekarstva[9].recepta != "y")
+				{
+					cout << "uspeshna pokupka" << endl;
+					return prodajbi(lekarstva, size);
+				}
+
+				if (lekarstva[9].recepta == "y")
+				{
+					do
+					{
+						cout << "Vuvedi recepta: " << endl;
+						cin >> receipt;
+						code = 232425;
+
+						if (receipt != code)
+						{
+							cout << "Greshna recepta" << endl;
+						}
+
+					} while (receipt != code);
+
+					if (receipt == code)
+					{
+						cout << "Uspeshna pokupka" << endl;
+						return prodajbi(lekarstva, size);
+					}
+				}
+			}
+			else
+				return prodajbi(lekarstva, size);
+		}
+		if (menu == 0);
+			return Gmenu(lekarstva, size);
+}
+
+void Gmenu(farmacy lekarstva[], int size)
+{
+	char izbor;	
+
+	cout << "[1] Nai skupo lekarstvo" << endl;
+	cout << "[2] Nenalichni lekarstva" << endl;
+	cout << "[3] Lekarstva s recepta" << endl;
+	cout << "[4] Pazaruvane" << endl;
+	cout << "[q] Izhod" << endl;
+
+	cin >> izbor;
+
+	switch (izbor)
+	{
+	case '1':
+		cena(lekarstva, size);
+		break;
+	case '2':
+		nalichnost(lekarstva, size);
+		break;
+	case '3':
+		recepta(lekarstva, size);
+		break;
+	case '4':
+		prodajbi(lekarstva, size);
+		break;
+	case 'q':
+		break;
+	default:
+		return Gmenu(lekarstva, size);
+	}
+}
