@@ -1,0 +1,176 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+class Car {
+private:
+	string model;
+	int ID;
+
+public:
+	Car() {
+		model = "NewCar";
+		ID = rand() % 9999 + 1;
+	}
+	Car(string model, int ID) {
+		this->model = model;
+		this->ID = ID;
+	}
+	void printCar() {
+		cout << model;
+		cout << " ID " << ID << endl;
+	}
+	string getModel() { return model; }
+	int getID() { return ID; }
+};
+class node : public Car {
+public:
+	//int data;		//originalCodeSegment
+	node* next;
+	node(Car car) {
+		//car.getModel();
+		//car.getID();
+		//car.printCar();
+		next = NULL;
+	}
+};
+class Queue {
+
+public:
+	Car* car;
+	node* front;
+	node* back;
+
+	void enqueue(node* n) {
+		if (back == NULL) {
+			front = back = n;
+		}
+		else {
+			back->next = n;
+			back = n;
+		}
+	}
+	void dequeue() {
+		if (front == NULL)
+			return;
+		node* n = front;
+		front = front->next;
+		if (front == NULL)
+			back = NULL;
+		delete(n);
+	}
+	void print() {
+
+		node* ptr = front;
+		while (ptr != NULL) {
+			ptr->printCar();
+			cout << "--------------" << endl;
+			ptr = ptr->next;
+		}
+	}
+	Queue() {
+		front = back = NULL;
+	}
+};
+class TrafficLighter {
+private:
+	int red;
+	int yellow;
+	int green;
+
+public:
+	TrafficLighter() {
+		red = 1;
+		yellow = 0;
+		green = 0;
+	}
+	void setRed(bool red) { this->red = red; }
+	void setYellow(bool yellow) { this->yellow = yellow; }
+	void setGreen(bool green) { this->green = green; }
+	int getRed() { return red; }
+	int getYellow() { return yellow; }
+	int getGreen() { return green; }
+
+	void printTL() {
+
+		if (red == 1) {
+			cout << "RED ON" << endl;
+		}
+		else cout << "RED OFF" << endl;
+
+		if (yellow == 1) {
+			cout << "YELLOW ON" << endl;
+		}
+		else cout << "YELLOW OFF" << endl;
+
+		if (green == 1) {
+			cout << "GREEN ON" << endl;
+		}
+		else cout << "GREEN OFF" << endl;
+	}
+};
+
+void wait(int wait_time);
+int main() {
+
+	Queue Q;
+	TrafficLighter TL;
+	Car car[50];
+	int randTraffic = 0;
+
+	do {
+		cout << "RED IS ON\nYELLOW IS OFF\nGREEN IS OFF" << endl << endl;
+		if (TL.getRed() == 1) {
+			randTraffic = rand() % 20 + 1;
+			for (int i = 0; i < randTraffic; i++) {
+				Q.enqueue(new node(car[i]));
+				Q.print();
+				wait(2);
+				system("cls");
+				cout << "RED IS ON\nYELLOW IS OFF\nGREEN IS OFFs" << endl << endl;
+			}			
+			TL.setYellow(1);
+			TL.setRed(0);
+			TL.setGreen(0);
+		}
+		if (TL.getYellow() == 1) {
+			cout << "RED IS OFF\nYELLOW IS ON\nGREEN IS OFF" << endl << endl;
+			Q.print();
+			wait(1);
+			system("cls");
+			cout << "RED IS OFF\nYELLOW IS OFF\nGREEN IS ON" << endl << endl;
+			Q.print();
+			TL.setGreen(1);
+			TL.setYellow(0);
+			TL.setRed(0);
+		}
+		if (TL.getGreen() == 1) {
+			wait(2);
+			system("cls");
+			cout << "RED IS OFF\nYELLOW IS OFF\nGREEN IS ON" << endl << endl;
+			randTraffic = rand() % 20 + 1;
+			for (int i = 0; i < randTraffic; i++) {
+				Q.dequeue();
+				Q.print();
+				wait(1);
+				system("cls");
+				cout << "RED IS OFF\nYELLOW IS OFF\nGREEN IS ON" << endl << endl;
+			}
+			TL.setGreen(0);
+			TL.setYellow(0);
+			TL.setRed(1);
+		}
+	} while (true);
+	return 0;
+}
+void wait(int wait_time) {
+	long* start_time = new long;
+	*start_time = time(0);
+	while ((*start_time + wait_time) > time(0)) {
+	};
+	delete start_time;
+};
