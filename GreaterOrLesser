@@ -1,0 +1,178 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+
+int main()
+{
+	srand(time(0));
+
+	int num[4]; // nums for calculation
+	int sumOfNum[2]; // sum of nums for comparing
+	int oneNumOrCalc[2]; // random options for comparing
+	int trueOrFalse[2]; // rand < >
+	int calculation = 0; // rand  + - * %
+	int userInput = 0; // 0 || 1
+	int comparingResult = 0;
+	int timeCounter = 0;
+	int xp;
+	int correct;
+	int incorrect;
+	int exit = 0;
+	do {
+		timeCounter = rand() % 8 + 1;
+		xp = 0;
+		correct = 0;
+		incorrect = 0;
+		do {
+			//cout << "|>>>>>> Brain Games <<<<<<|" << endl;
+			cout << "|>>> Greater Or Lesser <<<|" << endl;
+			cout << "|>>> XP:" << xp << " <<<|" << endl;
+			cout << "|Rounds:" << timeCounter << " <<<|" << endl << endl;
+			// first part on screen, num or calculation
+			oneNumOrCalc[0] = rand() % 2 + 1;	// compare one number or calculation of two
+
+			if (oneNumOrCalc[0] == 1) { // calculate numbers for comparing
+				num[0] = rand() % 20 + 1;
+				trueOrFalse[0] = rand() % 2 + 1;
+				cout << "	   " << num[0];
+				if (trueOrFalse[0] == 1) {	cout << " < ";	}
+				else cout << " > ";
+			}
+			else {
+				num[0] = rand() % 20 + 1;
+				num[1] = rand() % 20 + 1;
+				calculation = rand() % 4 + 1;
+
+				switch (calculation) {
+				case 1:
+					trueOrFalse[0] = rand() % 2 + 1;
+					sumOfNum[0] = num[0] + num[1];	// +
+					cout << "	  " << num[0] << "+" << num[1]; //
+					if (trueOrFalse[0] == 1) {	cout << " < "; }
+					else cout << " > ";
+					break;
+				case 2:
+					trueOrFalse[0] = rand() % 2 + 1;
+					sumOfNum[0] = num[0] - num[1];	// -
+					cout << "	  " << num[0] << "-" << num[1]; //
+					if (trueOrFalse[0] == 1) {	cout << " < ";	}
+					else cout << " > ";
+					break;
+				case 3:
+					trueOrFalse[0] = rand() % 2 + 1;
+					sumOfNum[0] = num[0] * num[1]; // *
+					cout << "	  " << num[0] << "*" << num[1]; //
+					if (trueOrFalse[0] == 1) {	cout << " < ";	}
+					else cout << " > ";
+					break;
+				case 4:
+					trueOrFalse[0] = rand() % 2 + 1;
+					sumOfNum[0] = num[0] / num[1]; // %
+					cout << "	  " << num[0] << "/" << num[1]; // 
+					if (trueOrFalse[0] == 1) {	cout << " < ";	}
+					else cout << " > ";
+					break;
+				}
+			}
+			// end of first part
+
+			// second part on screen, num or calculation
+			oneNumOrCalc[1] = rand() % 2 + 1;	// compare one number or calculation of two
+
+			if (oneNumOrCalc[1] == 1) {
+				num[2] = rand() % 20 + 1;
+				cout << num[2];
+			}
+			else {							// calculate numbers for comparing
+				num[2] = rand() % 20 + 1;
+				num[3] = rand() % 20 + 1;
+				calculation = rand() % 4 + 1;
+
+				switch (calculation) {
+				case 1:
+					sumOfNum[1] = num[2] + num[3];	// +
+					cout << num[2] << "+" << num[3] << " ";
+					break;
+				case 2:
+					sumOfNum[1] = num[2] - num[3];	// -
+					cout << num[2] << "-" << num[3] << " ";
+					break;
+				case 3:
+					sumOfNum[1] = num[2] * num[3];	// *
+					cout << num[2] << "*" << num[3] << " ";
+					break;
+				case 4:
+					sumOfNum[1] = num[2] / num[3];	// %
+					cout << num[2] << "/" << num[3] << " ";
+					break;
+				}
+			}
+			// end of second part
+
+			// comparing number1 and number2
+			if (oneNumOrCalc[0] == 1 && oneNumOrCalc[1] == 1) {
+
+				if (num[0] < num[2] && trueOrFalse[0] == 1) { comparingResult = 1; }
+				else if (num[0] < num[2] && trueOrFalse[0] == 2) {	comparingResult = 0; }
+				else if (num[0] > num[2] && trueOrFalse[0] == 1) {	comparingResult = 0; }
+				else if (num[0] > num[2] && trueOrFalse[0] == 2) {	comparingResult = 1; }
+			}
+			// comparing number1 with calculation2
+			if (oneNumOrCalc[0] == 1 && oneNumOrCalc[1] == 2) {
+
+				if (num[0] < sumOfNum[1] && trueOrFalse[0] == 1) {	comparingResult = 1; }
+				else if (num[0] < sumOfNum[1] && trueOrFalse[0] == 2) {	comparingResult = 0; }
+				else if (num[0] > sumOfNum[1] && trueOrFalse[0] == 1) {	comparingResult = 0; }
+				else if (num[0] > sumOfNum[1] && trueOrFalse[0] == 2) { comparingResult = 1; }
+			}
+			// comparing calculation1 with calculation2
+			if (oneNumOrCalc[0] == 2 && oneNumOrCalc[1] == 2) {
+
+				if (sumOfNum[0] < sumOfNum[1] && trueOrFalse[0] == 1) {	comparingResult = 1; }
+				else if (sumOfNum[0] < sumOfNum[1] && trueOrFalse[0] == 2) { comparingResult = 0; }
+				else if (sumOfNum[0] > sumOfNum[1] && trueOrFalse[0] == 1) { comparingResult = 0; }
+				else if (sumOfNum[0] > sumOfNum[1] && trueOrFalse[0] == 2) { comparingResult = 1; }
+			}
+			// comparing calculation1 witn number2
+			if (oneNumOrCalc[0] == 2 && oneNumOrCalc[1] == 1) {
+
+				if (sumOfNum[0] < num[2] && trueOrFalse[0] == 1) { comparingResult = 1; }
+				else if (sumOfNum[0] < num[2] && trueOrFalse[0] == 2) {	comparingResult = 0; }
+				else if (sumOfNum[0] > num[2] && trueOrFalse[0] == 1) {	comparingResult = 0; }
+				else if (sumOfNum[0] > num[2] && trueOrFalse[0] == 2) { comparingResult = 1; }
+			}
+
+			cout << endl << endl;
+			cout << "|>>>>|True| Or |False|<<<<|" << endl;
+			cout << "|>>>>| 1  |    |  0  |<<<<|" << endl;
+			//cout << "comparing result testing value: " << comparingResult;
+
+			cin >> userInput;
+			system("cls");
+			timeCounter--;
+			if (userInput == comparingResult) {
+				xp += 5;
+				correct++;
+			} else {
+				xp -= 5;
+				incorrect++;
+			}
+
+		} while (timeCounter != 0);
+
+		cout << "|>>> Greater Or Lesser <<<|" << endl << endl;
+		cout << "|Final XP: " << xp << endl;
+		cout << "|Correct " << correct << "  <<|" << endl;
+		cout << "|Incorrect " << incorrect << " <|" << endl << endl;
+		cout << "|NewGame [1/0]| " << endl;
+		cin >> exit;
+		system("cls");
+	}while (exit != 0);
+
+	return 0;
+}
