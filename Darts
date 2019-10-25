@@ -1,0 +1,322 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+class Player {
+protected:
+	string playerName;
+	string Team;
+	int score;
+public:
+	Player() {
+		playerName = "\0";
+		Team = "\0";
+		score = 0;
+	}
+	Player(string playerName, string Team, int score) {
+		this->playerName = playerName;
+		this->Team = Team;
+		this->score = score;
+	}
+	Player(Player& other) {
+		playerName = other.playerName;
+		Team = other.Team;
+		score = other.score;
+	}
+	string getName() { return playerName; }
+	string getTeam() { return Team; }
+	int getScore() { return score; }
+	void setScore(int score) {
+		this->score = score;
+	}
+	void addName() {
+		cout << "input Your Name" << endl;
+		cin >> playerName;
+		system("cls");
+	}
+	void addTeam() {
+		cout << "add Team" << endl;
+		cin >> Team;
+		system("cls");
+	}
+	void print() {
+		cout << "Name: " << playerName << endl;
+		cout << "Team: " << Team << endl << endl;
+	}
+};
+class Darts {
+protected:
+	int startScore[7];
+	int successfullHit[7];
+	int unsuccessfullHit[7];
+	int hit;
+	int sector;
+	int manualHit;
+	int turn;
+public:
+	Darts() {
+		startScore[7] = { 0 };
+		successfullHit[7] = { 0 };
+		unsuccessfullHit[7] = { 0 };
+		hit = rand() % 20 + 1;
+		sector = rand() % 3 + 1;
+		manualHit = 0;
+		turn = 1;
+	}
+	void gameModeOnePlayer301(Player& obj1) {
+
+		startScore[0] = obj1.getScore();
+		cout << "Hello! " << obj1.getName() << endl << endl;
+		cout << obj1.getName() << " start with " << obj1.getScore() << endl << endl;
+		while (startScore[0] > 0) {
+			hit = rand() % 20;
+			cout << "Make a shot!! Press 5" << endl;
+			cin >> manualHit;
+			if (manualHit == 5) {
+				sector = rand() % 3 + 1;
+			}
+			//wait(1);
+			switch (sector) {
+			case 1:
+				cout << "Player: " << obj1.getName() << " hit Single " << hit << endl;
+				if (hit <= startScore[0]) {
+					successfullHit[0] += 1;
+					startScore[0] = startScore[0] - hit;
+					obj1.setScore(startScore[0]);
+					cout << "Current Points: " << obj1.getScore() << endl;
+					break;
+				}
+				else {
+					cout << "Current Points: " << obj1.getScore() << endl;
+					unsuccessfullHit[0] += 1;
+					break;
+				}
+				break;
+			case 2:
+				cout << "Player: " << obj1.getName() << " hit Double " << hit << endl;
+				if (hit * 2 <= startScore[0]) {
+					successfullHit[0] += 1;
+					startScore[0] = startScore[0] - (hit * 2);
+					obj1.setScore(startScore[0]);
+					cout << "Current Points: " << obj1.getScore() << endl;
+					break;
+				}
+				else {
+					cout << "Current Points: " << obj1.getScore() << endl;
+					unsuccessfullHit[0] += 1;
+					break;
+				}
+				break;
+			case 3:
+				cout << "Player: " << obj1.getName() << " hit Triple " << hit << endl;
+				if (hit * 3 < startScore[0]) {
+					successfullHit[0] += 1;
+					startScore[0] = startScore[0] - (hit * 3);
+					obj1.setScore(startScore[0]);
+					cout << "Current Points: " << obj1.getScore() << endl;
+					break;
+				}
+				else {
+					cout << "Current Points: " << obj1.getScore() << endl;
+					unsuccessfullHit[0] += 1;
+					break;
+				}
+				break;
+			}
+			if (unsuccessfullHit[0] > 24) {
+				cout << "Player: " << obj1.getName() << " Retired after " << unsuccessfullHit[0] << " Unsuccessfull Shots" << endl;
+				break;
+			}
+			if (obj1.getScore() == 0) {
+				cout << "Congratulations! " << obj1.getName() << " You win with: " << endl;
+				cout << successfullHit[0] << " Successfull Shots and " << unsuccessfullHit[0] << " Unsuccessfull Shots" << endl;
+				break;
+			}
+		}
+	}
+	void gameModeOneVSOne(Player& obj1, Player& obj2) {
+
+
+		cout << "Hello Players!!" << endl;
+		cout << "Player:" << obj1.getName() << "| Team: " << obj1.getTeam() << endl;
+		cout << "Player:" << obj2.getName() << "| Team: " << obj2.getTeam() << endl << endl;
+		cout << obj1.getName() << " start with " << obj1.getScore() << " Points" << endl;
+		cout << obj2.getName() << " start with " << obj2.getScore() << " Points" << endl << endl;
+
+		do {
+			if (turn == 1) {
+				startScore[0] = obj1.getScore();
+				while (startScore[0] > 0) {
+
+					cout << obj1.getName();
+					cout << " Make a shot!! Press 5" << endl;
+					cin >> manualHit;
+					if (manualHit == 5) {
+						sector = rand() % 3 + 1;
+					}
+					//wait(1);
+					hit = rand() % 20;
+					sector = rand() % 3 + 1;
+					//	wait(1);
+					switch (sector) {
+					case 1:
+						cout << "Player: " << obj1.getName() << " hit Single " << hit << endl;
+						if (hit <= startScore[0]) {
+							successfullHit[0]+=1;
+							startScore[0] = startScore[0] - hit;
+							obj1.setScore(startScore[0]);
+							cout << "Current Points: " << obj1.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj1.getScore() << endl;
+							unsuccessfullHit[0]+=1;
+							break;
+						}
+						break;
+					case 2:
+						cout << "Player: " << obj1.getName() << " hit Double " << hit << endl;
+						if (hit * 2 <= startScore[0]) {
+							successfullHit[0] += 1;
+							startScore[0] = startScore[0] - (hit * 2);
+							obj1.setScore(startScore[0]);
+							cout << "Current Points: " << obj1.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj1.getScore() << endl;
+							unsuccessfullHit[0] += 1;
+							break;
+						}
+						break;
+					case 3:
+						cout << "Player: " << obj1.getName() << " hit Triple " << hit << endl;
+						if (hit * 3 < startScore[0]) {
+							successfullHit[0] += 1;
+							startScore[0] = startScore[0] - (hit * 3);
+							obj1.setScore(startScore[0]);
+							cout << "Current Points: " << obj1.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj1.getScore() << endl;
+							unsuccessfullHit[0] += 1;
+							break;
+						}
+						break;
+					}
+					if (unsuccessfullHit[0] > 24) {
+						cout << "Player: " << obj1.getName() << " Retired after " << unsuccessfullHit[0] << " Unsuccessfull Shots" << endl;
+						cout << "Winner is: " << obj2.getName();
+						break;
+					}
+					if (obj1.getScore() == 0) {
+						cout << "Congratulations! " << obj1.getName() << " You win with: " << endl;
+						cout << successfullHit[0] << " Successfull Shots and " << unsuccessfullHit[0] << " Unsuccessfull Shots" << endl;
+						break;
+					}
+					turn = 2;
+					break;
+				}
+
+			}
+			if (turn == 2) {
+				startScore[1] = obj2.getScore();
+				while (startScore[1] > 0) {
+					cout << obj2.getName();
+					cout << " Make a shot!!! Press 5" << endl;
+					cin >> manualHit;
+					if (manualHit == 5) {
+						sector = rand() % 3 + 1;
+					}
+					//wait(1);
+					hit = rand() % 20;
+					sector = rand() % 3 + 1;
+					//wait(1);
+					switch (sector) {
+
+					case 1:
+						cout << "Player: " << obj2.getName() << " hit Single " << hit << endl;
+						if (hit <= startScore[1]) {
+							successfullHit[1]+=1;
+							startScore[1] = startScore[1] - hit;
+							obj2.setScore(startScore[1]);
+							cout << "Current Points: " << obj2.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj2.getScore() << endl;
+							unsuccessfullHit[1] += 1;
+							break;
+						}
+						break;
+					case 2:
+						cout << "Player: " << obj2.getName() << " hit Double " << hit << endl;
+						if (hit * 2 <= startScore[1]) {
+							successfullHit[1] += 1;
+							startScore[1] = startScore[1] - (hit * 2);
+							obj2.setScore(startScore[1]);
+							cout << "Current Points: " << obj2.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj2.getScore() << endl;
+							unsuccessfullHit[1] += 1;
+							break;
+						}
+						break;
+					case 3:
+						cout << "Player: " << obj2.getName() << " hit Triple " << hit << endl;
+						if (hit * 3 < startScore[1]) {
+							successfullHit[1] += 1;
+							startScore[1] = startScore[1] - (hit * 3);
+							obj2.setScore(startScore[1]);
+							cout << "Current Points: " << obj2.getScore() << endl << endl;
+							break;
+						}
+						else {
+							cout << "Current Points: " << obj2.getScore() << endl;
+							unsuccessfullHit[1] += 1;
+							break;
+						}
+						break;
+					}
+					if (unsuccessfullHit[1] > 24) {
+						cout << "Player: " << obj2.getName() << " Retired after " << unsuccessfullHit[1] << " Unsuccessfull Shots" << endl;
+						cout << "Winner is: " << obj1.getName() << endl;
+						break;
+					}
+					if (startScore[1] == 0) {
+						cout << "Congratulations! " << obj2.getName() << " You win with: " << endl;
+						cout << successfullHit[1] << " Successfull Shots and " << unsuccessfullHit[1] << " Unsuccessfull Shots" << endl;
+						break;
+					}
+					turn = 1;
+					break;
+				}
+			}
+		} while (turn != 0);
+
+	}
+};
+
+int main() {
+
+	srand(time(0));
+
+	Player Unknown("Unknown", "Human", 301);
+	Player CPU("XMachine", "Robots", 151);
+	Darts game;
+	//game.gameModeOnePlayer301(Unknown);
+	game.gameModeOneVSOne(Unknown, CPU);
+
+
+	system("PAUSE");
+
+	return 0;
+}
+
