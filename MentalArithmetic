@@ -1,0 +1,399 @@
+#include <iostream>
+#include <iomanip>
+#include <cstdlib>
+#include <time.h>
+#include <string>
+
+using namespace std;
+
+void printEasyBanner();
+void printMediumBanner();
+void printHardBanner();
+void printGodMBanner();
+void printMainMenu();
+void wait(int wait_time);
+int main()
+{
+	srand(time(0));
+
+	int xp = 0;
+	int num = 0;
+	int num2 = 0;
+	int level = 0;
+	int exit = 0;
+	int calculation = 0;
+	int userInput = 0;
+	int correct = 0;
+	int incorrect = 0;
+	int sumOfNums = 0;
+	int randomRounds = 0;
+	int numCounterEasy = 3;		//time(1)
+	int numCounterMedium = 5;	//time(3)
+	int numCounterHard = 9;	//time(4)
+	int numCounterNonHuman = 15;//time(5)
+
+	do // main
+	{
+		xp = 0;
+		if (xp != 0) {
+			//printBanner();
+			cout << "|>>> XP: " << xp << " <<<|" << endl << endl;
+		}
+		cout << "|>>> Mental Arithmetic <<<|" << endl;
+		printMainMenu();
+		cin >> level;
+		system("cls");
+
+		switch (level) {
+		case 1:			
+				randomRounds = rand() % 6 + 1;
+				do { // count rounds
+					numCounterEasy = 3;
+					num2 = rand() % 8+1;	// first number		
+					printEasyBanner();
+					cout << "|>>> XP: " << xp << " <<<|" << endl;
+					cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+					cout << " " << num2 << "	  <<<<|" << endl; // first number
+					wait(1);
+					system("cls");
+
+					do { // count level difficulty
+						printEasyBanner();
+						cout << "|>>> XP: " << xp << " <<<|" << endl;
+						cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+						calculation = rand() % 4 + 1; // first operation
+						switch (calculation) {
+						case 1:
+							cout << " + ";
+							//sumOfNums += num;
+							break;
+						case 2:
+							cout << " - ";
+							//sumOfNums -= num;
+							break;
+						case 3:
+							cout << " * ";
+							//sumOfNums *= num;
+							break;
+						case 4:
+							cout << " / ";
+							//sumOfNums /= num;
+							break;
+						}
+						num = rand() % 8+1; // second number
+						if (numCounterEasy == 3) {
+							if (calculation == 1) { sumOfNums = num2 + num; }
+							else if (calculation == 2) { sumOfNums = num2 - num; }
+							else if (calculation == 3) { sumOfNums = num2 * num; }
+							else if (calculation == 4) { sumOfNums = num2 / num; }
+						}
+						else if (numCounterEasy < 3) {
+							if (calculation == 1) { sumOfNums += num; }
+							else if (calculation == 2) { sumOfNums -= num; }
+							else if (calculation == 3) { sumOfNums *= num; }
+							else if (calculation == 4) { sumOfNums /= num; }
+						}
+						cout << num << "	<<<<<<|" << endl; // second number
+						wait(1);
+						system("cls");
+						numCounterEasy--;
+					} while (numCounterEasy != 0); // count level difficulty
+
+					printEasyBanner();
+					cout << "|>>> XP: " << xp << " <<<|" << endl;
+					cout << "|> Rounds " << randomRounds << " <|" << endl << endl;
+					cout << "|>>>>> Input  Answer <<<<<|" << endl;
+					//cout << "|>>>>> " << sumOfNums << " <<<<<|" << endl; //joker 
+					cout << "|>>>>> ";
+					cin >> userInput;
+					//cout << " <<<<<|";
+
+					if (userInput == sumOfNums) {
+						xp += 10;
+						correct++;
+					}else {
+						xp -= 10;
+						incorrect++;
+					}
+					wait(2);
+					system("cls");
+					randomRounds--;
+				} while (randomRounds != 0); // count rounds
+				printEasyBanner();
+				break;
+		case 2:
+			randomRounds = rand() % 6 + 1;
+			do { // count rounds
+				numCounterMedium = 5;
+				num2 = rand() % 10 + 1;	// first number		
+				printMediumBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+				cout << " " << num2 << "	  <<<<|" << endl; // first number
+				wait(3);
+				system("cls");
+
+				do { // count level difficulty
+					printMediumBanner();
+					cout << "|>>> XP: " << xp << " <<<|" << endl;
+					cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+					calculation = rand() % 4 + 1; // first operation
+					switch (calculation) {
+					case 1:
+						cout << " + ";
+						//sumOfNums += num;
+						break;
+					case 2:
+						cout << " - ";
+						//sumOfNums -= num;
+						break;
+					case 3:
+						cout << " * ";
+						//sumOfNums *= num;
+						break;
+					case 4:
+						cout << " / ";
+						//sumOfNums /= num;
+						break;
+					}
+					num = rand() % 10 + 1; // second number
+					if (numCounterMedium == 5) {
+						if (calculation == 1) { sumOfNums = num2 + num; }
+						else if (calculation == 2) { sumOfNums = num2 - num; }
+						else if (calculation == 3) { sumOfNums = num2 * num; }
+						else if (calculation == 4) { sumOfNums = num2 / num; }
+					}
+					else if (numCounterMedium < 5) {
+						if (calculation == 1) { sumOfNums += num; }
+						else if (calculation == 2) { sumOfNums -= num; }
+						else if (calculation == 3) { sumOfNums *= num; }
+						else if (calculation == 4) { sumOfNums /= num; }
+					}
+					cout << num << "	<<<<<<|" << endl; // second number
+					wait(2);
+					system("cls");
+					numCounterMedium--;
+				} while (numCounterMedium != 0); // count level difficulty
+
+				printMediumBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds " << randomRounds << " <|" << endl << endl;
+				cout << "|>>>>> Input  Answer <<<<<|" << endl;
+				//cout << "|>>>>> " << sumOfNums << " <<<<<|" << endl; // joker
+				cout << "|>>>>> ";
+				cin >> userInput;
+				//cout << " <<<<<|";
+
+				if (userInput == sumOfNums) {
+					xp += 10;
+					correct++;
+				}
+				else {
+					xp -= 10;
+					incorrect++;
+				}
+				wait(2);
+				system("cls");
+				randomRounds--;
+			} while (randomRounds != 0); // count rounds
+			printMediumBanner();
+			break;
+		case 3:
+			randomRounds = rand() % 6 + 1;
+			do { // count rounds
+				numCounterHard = 9;
+				num2 = rand() % 15 + 1;	// first number		
+				printHardBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+				cout << " " << num2 << "	  <<<<|" << endl; // first number
+				wait(4);
+				system("cls");
+
+				do { // count level difficulty
+					printHardBanner();
+					cout << "|>>> XP: " << xp << " <<<|" << endl;
+					cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+					calculation = rand() % 4 + 1; // first operation
+					switch (calculation) {
+					case 1:
+						cout << " + ";
+						//sumOfNums += num;
+						break;
+					case 2:
+						cout << " - ";
+						//sumOfNums -= num;
+						break;
+					case 3:
+						cout << " * ";
+						//sumOfNums *= num;
+						break;
+					case 4:
+						cout << " / ";
+						//sumOfNums /= num;
+						break;
+					}
+					num = rand() % 10 + 1; // second number
+					if (numCounterHard == 9) {
+						if (calculation == 1) { sumOfNums = num2 + num; }
+						else if (calculation == 2) { sumOfNums = num2 - num; }
+						else if (calculation == 3) { sumOfNums = num2 * num; }
+						else if (calculation == 4) { sumOfNums = num2 / num; }
+					}
+					else if (numCounterHard < 9) {
+						if (calculation == 1) { sumOfNums += num; }
+						else if (calculation == 2) { sumOfNums -= num; }
+						else if (calculation == 3) { sumOfNums *= num; }
+						else if (calculation == 4) { sumOfNums /= num; }
+					}
+					cout << num << "	<<<<<<|" << endl; // second number
+					wait(4);
+					system("cls");
+					numCounterHard--;
+				} while (numCounterHard != 0); // count level difficulty
+
+				printHardBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds " << randomRounds << " <|" << endl << endl;
+				cout << "|>>>>> Input  Answer <<<<<|" << endl;
+				//cout << "|>>>>> " << sumOfNums << " <<<<<|" << endl; // joker
+				cout << "|>>>>> ";
+				cin >> userInput;
+				//cout << " <<<<<|";
+
+				if (userInput == sumOfNums) {
+					xp += 10;
+					correct++;
+				}
+				else {
+					xp -= 10;
+					incorrect++;
+				}
+				wait(2);
+				system("cls");
+				randomRounds--;
+			} while (randomRounds != 0); // count rounds
+			printHardBanner();
+			break;
+		case 4:
+			randomRounds = rand() % 6 + 1;
+			do { // count rounds
+				numCounterNonHuman = 15;
+				num2 = rand() % 8 + 1;	// first number		
+				printGodMBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+				cout << " " << num2 << "	  <<<<|" << endl; // first number
+				wait(5);
+				system("cls");
+
+				do { // count level difficulty
+					printGodMBanner();
+					cout << "|>>> XP: " << xp << " <<<|" << endl;
+					cout << "|> Rounds  " << randomRounds << " <|" << endl << endl;
+					calculation = rand() % 4 + 1; // first operation
+					switch (calculation) {
+					case 1:
+						cout << " + ";
+						//sumOfNums += num;
+						break;
+					case 2:
+						cout << " - ";
+						//sumOfNums -= num;
+						break;
+					case 3:
+						cout << " * ";
+						//sumOfNums *= num;
+						break;
+					case 4:
+						cout << " / ";
+						//sumOfNums /= num;
+						break;
+					}
+					num = rand() % 8 + 1; // second number
+					if (numCounterNonHuman == 15) {
+						if (calculation == 1) { sumOfNums = num2 + num; }
+						else if (calculation == 2) { sumOfNums = num2 - num; }
+						else if (calculation == 3) { sumOfNums = num2 * num; }
+						else if (calculation == 4) { sumOfNums = num2 / num; }
+					}
+					else if (numCounterNonHuman < 15) {
+						if (calculation == 1) { sumOfNums += num; }
+						else if (calculation == 2) { sumOfNums -= num; }
+						else if (calculation == 3) { sumOfNums *= num; }
+						else if (calculation == 4) { sumOfNums /= num; }
+					}
+					cout << num << "	<<<<<<|" << endl; // second number
+					wait(5);
+					system("cls");
+					numCounterNonHuman--;
+				} while (numCounterNonHuman != 0); // count level difficulty
+
+				printGodMBanner();
+				cout << "|>>> XP: " << xp << " <<<|" << endl;
+				cout << "|> Rounds " << randomRounds << " <|" << endl << endl;
+				cout << "|>>>>> Input  Answer <<<<<|" << endl;
+				//cout << "|>>>>> " << sumOfNums << " <<<<<|" << endl; // joker
+				cout << "|>>>>> ";
+				cin >> userInput;
+				//cout << " <<<<<|";
+
+				if (userInput == sumOfNums) {
+					xp += 10;
+					correct++;
+				}
+				else {
+					xp -= 10;
+					incorrect++;
+				}
+				wait(2);
+				system("cls");
+				randomRounds--;
+			} while (randomRounds != 0); // count rounds
+			printGodMBanner();
+			break;
+		}		
+			cout << endl;
+			cout << "|Final XP: " << xp << endl;
+			cout << "|Correct " << correct << "  <<|" << endl;
+			cout << "|Incorrect " << incorrect << " <|" << endl;
+			cout << "|NewGame [1/0]| " << endl;
+			cin >> exit;
+			//wait(4);
+			system("cls");
+
+	} while (exit != 0);
+
+	return 0;
+}
+
+void printMainMenu() {
+	cout << "|>>> Choose Level <<<<<<<<|" << endl;
+	cout << "|>>> [1] Easy <<<<<<<<<<<<|" << endl;
+	cout << "|>>> [2] Medium <<<<<<<<<<|" << endl;
+	cout << "|>>> [3] Hard <<<<<<<<<<<<|" << endl;
+	cout << "|>>> [4] God Mode <<<<<<<<|" << endl;
+}
+void printEasyBanner() {
+	cout << "|>>> Mental Arithmetic <<<|" << endl;
+	cout << "|>>>>>> Level  Easy <<<<<<|" << endl;
+}
+void printMediumBanner() {
+	cout << "|>>> Mental Arithmetic <<<|" << endl;
+	cout << "|>>>>> Level  Medium <<<<<|" << endl;
+}
+void printHardBanner() {
+	cout << "|>>> Mental Arithmetic <<<|" << endl;
+	cout << "|>>>>>> Level  Hard <<<<<<|" << endl;
+}
+void printGodMBanner() {
+	cout << "|>>> Mental Arithmetic <<<|" << endl;
+	cout << "|>>>> Level  God Mode <<<<|" << endl;
+}
+void wait(int wait_time) {
+	long* start_time = new long;
+	*start_time = time(0);
+	while ((*start_time + wait_time) > time(0)) {
+	};
+	delete start_time;
+};
